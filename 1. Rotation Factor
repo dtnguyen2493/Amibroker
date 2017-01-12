@@ -1,0 +1,60 @@
+///////////////////////////////////
+//Coded by Rajandran R
+//Date : 05th July 2015
+//www.marketcalls.in
+///////////////////////////////////
+
+_SECTION_BEGIN("Rotation Factor - Market Profile");
+
+
+//Set RF
+
+
+for(i=1;i<BarCount;i++)
+{
+	RF[0]=0;
+
+//Set condition
+
+if(H[i]>H[i-1] AND L[i]>L[i-1])
+{
+	RF[i]=RF[i-1]+2;
+}
+
+if(H[i]<H[i-1] AND L[i]<L[i-1])
+{
+	RF[i]=RF[i-1]-2;
+}
+
+if(H[i]>=H[i-1] AND L[i]<=L[i-1])
+{
+	RF[i]=RF[i-1];
+}
+
+if(H[i]<=H[i-1] AND L[i]>=L[i-1])
+{
+	RF[i]=RF[i-1];
+}
+
+if(H[i]==H[i-1] AND L[i]>L[i-1])
+{
+	RF[i]=RF[i-1]+1;
+}
+if(H[i]>H[i-1] AND L[i]==L[i-1])
+{
+	RF[i]=RF[i-1]+1;
+}
+if(H[i]<H[i-1] AND L[i]==L[i-1])
+{
+	RF[i]=RF[i-1]-1;
+}
+
+if(H[i]==H[i-1] AND L[i]<L[i-1])
+{
+	RF[i]=RF[i-1]-1;
+}
+}
+
+Plot(RF,"Rotation Factor",IIf(RF>0 AND RF>Ref(RF,-1),colorGreen,colorRed),ParamStyle("Histograme",styleHistogram|styleOwnScale|styleThick,maskHistogram));
+
+_SECTION_END();
